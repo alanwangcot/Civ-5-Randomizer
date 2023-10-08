@@ -1,0 +1,19 @@
+.DS_Store
+
+build.bat
+
+venv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+.idea/
+
+dist/
+
+build/
+
+main.spec
