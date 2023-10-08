@@ -7,13 +7,13 @@ from Misc import MY_FONT, resource_path
 class Dialog(QDialog):
 
     dialog_confirmed = pyqtSignal()
-    def __init__(self):
+    def __init__(self, text):
         super().__init__()
 
-        self.setWindowTitle('Error')
+        self.setWindowTitle('错误！')
         self.setWindowIcon(QIcon(resource_path("assets/icons/civ.png")))
-        self.setFixedSize(200,100)
-        dialog_label = QLabel("文明数量不足")
+        self.setFixedSize(300,100)
+        dialog_label = QLabel(text)
         dialog_label.setFont(QFont(MY_FONT,12))
         dialog_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         dialog_layout = QGridLayout()

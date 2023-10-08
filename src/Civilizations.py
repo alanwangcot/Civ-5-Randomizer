@@ -1,5 +1,5 @@
 import random
-import secrets
+import secrets, datetime
 
 class Civilizations():
     CHINA = '中国'
@@ -63,10 +63,12 @@ class Civilizations():
         if num_players * num_choices > len(self.CIV_LIST):
             return None
         civs = self.CIV_LIST.copy()
-        ret = []
+        current_datetime = datetime.datetime.now()
+        formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+        ret = [[seed, formatted_datetime]]
         for i in range(num_players):
             ret.append(random.sample(civs, num_choices))
-            civs = [civ for civ in civs if civ not in ret[i]]
+            civs = [civ for civ in civs if civ not in ret[i + 1]]
         return ret
     
 if __name__ == "__main__":

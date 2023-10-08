@@ -1,5 +1,5 @@
 import random
-import secrets
+import secrets, datetime
 
 class Wonders():
     EARLY_WONDERS_LIST = ["兵马俑",
@@ -47,7 +47,9 @@ class Wonders():
         if (num_players * 3 > len(self.WONDERS_LIST)):
             return None
         wonders = self.WONDERS_LIST.copy()
-        ret = []
+        current_datetime = datetime.datetime.now()
+        formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+        ret = [[seed, formatted_datetime]]
         for i in range(num_players):
             
             rand_wonders = random.sample(wonders, 3)
@@ -59,5 +61,5 @@ class Wonders():
                     return self.randomize(num_players)
                 rand_wonders = random.sample(wonders, 3)
             ret.append(random.sample(wonders, 3))
-            wonders = [wonder for wonder in wonders if wonder not in ret[i]]
+            wonders = [wonder for wonder in wonders if wonder not in ret[i + 1]]
         return ret
