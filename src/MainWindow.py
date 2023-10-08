@@ -95,10 +95,10 @@ class MainWindow(QMainWindow):
     def handleChecked(self, checked_name):
         if (checked_name in self.civs.CIV_LIST):
             self.civs.CIV_LIST.remove(checked_name)
-            print(len(self.civs.CIV_LIST))
+            # print(len(self.civs.CIV_LIST))
         else:
             self.civs.CIV_LIST.append(checked_name)
-            print(len(self.civs.CIV_LIST))
+            # print(len(self.civs.CIV_LIST))
 
     def createButtons(self):
         row = 0
@@ -133,22 +133,28 @@ class MainWindow(QMainWindow):
         self.layout.addWidget(wonders_button, 5, 8)
         self.layout.addWidget(selection_button, 4, 8)
 
+        # if windows
+        if sys.platform.startswith('win'):
+            font = QFont(MY_FONT, 10)
+        else:
+            font = QFont(MY_FONT, 14)
+
         # 一键禁用/解禁一级/二级文明/全部
         god_layout = QVBoxLayout()
         self.ban_god_button = SelectionButton("禁/解禁④🈲")
         self.ban_god_button.setFixedSize(100, 50)
-        self.ban_god_button.setFont(QFont(MY_FONT, 14))
+        self.ban_god_button.setFont(font)
         self.ban_god_button.setToolTip("按一次全解禁，再按一次全禁。别连续点太多次不然程序会卡死。")
         self.ban_god_button.clicked.connect(self.unbanGod)
         self.ban_second_button = SelectionButton("禁/解禁二级")
         self.ban_second_button.setToolTip("按一次全解禁，再按一次全禁。别连续点太多次不然程序会卡死。")
         self.ban_second_button.setFixedSize(100, 50)
-        self.ban_second_button.setFont(QFont(MY_FONT, 14))
+        self.ban_second_button.setFont(font)
         self.ban_second_button.clicked.connect(self.unbanSecond)
         unban_all_button = SelectionButton("解禁全部")
         unban_all_button.setToolTip("直接解禁全部文明")
         unban_all_button.setFixedSize(100, 50)
-        unban_all_button.setFont(QFont(MY_FONT, 14))
+        unban_all_button.setFont(font)
         unban_all_button.clicked.connect(self.unbanAll)
         self.layout.addWidget(self.ban_god_button, 5, 5)
         self.layout.addWidget(self.ban_second_button, 5, 6)
