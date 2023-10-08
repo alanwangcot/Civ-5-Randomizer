@@ -31,3 +31,29 @@ class CivCard(QWidget):
         layout.addWidget(self.label)
 
         self.setLayout(layout)
+
+class WonderCard(QWidget):
+        def __init__(self, text, icon_path, parent=None):
+            super().__init__()
+
+            self.icon_path = icon_path
+            self.text = text
+
+            self.icon_label = QLabel()
+            icon_pixmap = QPixmap(icon_path)
+            icon_pixmap = icon_pixmap.scaled(36, 36, Qt.AspectRatioMode.KeepAspectRatio)
+            self.icon_label.setPixmap(icon_pixmap)
+            self.icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+            self.label = QLabel(text)
+            self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.label.setFont(QFont(MY_FONT, 20))
+            outline_effect = WordOutline()
+            self.label.setGraphicsEffect(outline_effect)
+
+            layout = QVBoxLayout()
+            layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            layout.addWidget(self.icon_label)
+            layout.addWidget(self.label)
+
+            self.setLayout(layout)

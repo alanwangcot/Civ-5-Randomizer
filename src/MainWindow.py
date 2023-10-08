@@ -10,6 +10,8 @@ from WordOutline import WordOutline
 from SelectionButton import SelectionButton
 from ResultsDialog import ResultsDialog
 from Misc import MY_FONT, resource_path
+from Wonders import Wonders
+from WonderDialog import WonderDialog
 
 
 
@@ -22,6 +24,7 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.civs = Civilizations()
+        self.wonders = Wonders()
         # Set dark theme background color
         palette = self.palette()
 
@@ -67,7 +70,7 @@ class MainWindow(QMainWindow):
         self.list_players.index_changed.connect(self.handlePlayerNum)
         self.list_civs.index_changed.connect(self.handleCivNum)
 
-        spacer = QSpacerItem(100, 20)
+        spacer = QSpacerItem(100, 100)
         self.layout.addItem(spacer, 5, 0)
 
         ban_info_label1 = QLabel("上方勾选")
@@ -112,9 +115,23 @@ class MainWindow(QMainWindow):
                 col = 0
     
     def createSelectionButton(self):
-        selection_button = SelectionButton()
+        selection_button = SelectionButton("摇一摇！")
+        wonders_button = SelectionButton("随机奇迹")
         selection_button.clicked.connect(self.rollCivs)
+        wonders_button.clicked.connect(self.rollWonders)
+        self.layout.addWidget(wonders_button, 5, 8)
         self.layout.addWidget(selection_button, 4, 8)
+
+
+    def rollWonders(self):
+        print("rolling wonders with following params: ")
+        print("num players: ", self.num_players)
+        rolled_wonders = self.wonders.randomize(self.num_players)
+        print("rolled wonders: ", rolled_wonders)
+        dialog = WonderDialog(self.num_players, rolled_wonders)
+        dialog.confirmed_signal.connect(self.show)
+        self.hide()
+        dialog.exec()
 
     def rollCivs(self):
         print("rolling civs with following params: ")

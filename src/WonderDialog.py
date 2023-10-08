@@ -1,19 +1,17 @@
-from PyQt6.QtWidgets import QDialog, QGridLayout, QPushButton, QLabel
-from PyQt6.QtGui import QIcon, QFont
-from Cards import CivCard
+from PyQt6.QtWidgets import QDialog, QGridLayout, QLabel, QSpacerItem, QPushButton, QSizePolicy
 from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtGui import QIcon, QFont
+from Misc import resource_path, MY_FONT
 from WordOutline import WordOutline
-from Misc import MY_FONT, resource_path
+from Cards import WonderCard
 
-class ResultsDialog(QDialog):
+class WonderDialog(QDialog):
     confirmed_signal = pyqtSignal()
-    def __init__(self, num_civs, num_players, civs):
+    def __init__(self, num_players:int, wonders:list):
         super().__init__()
 
-        self.setWindowTitle('随机结果')
+        self.setWindowTitle("随机奇迹")
         self.setWindowIcon(QIcon(resource_path("assets/icons/civ.png")))
-
-
 
         layout = QGridLayout()
         for i in range(num_players):
@@ -23,18 +21,16 @@ class ResultsDialog(QDialog):
             outline_effect = WordOutline()
             player_label.setGraphicsEffect(outline_effect)
             layout.addWidget(player_label, i, 0)
-            curr_civs = civs[i]
-            for j in range(num_civs):
-                civ_icon = resource_path("assets/icons/" + curr_civs[j] + ".png")
-                civ_card = CivCard(curr_civs[j], civ_icon)
-                layout.addWidget(civ_card, i, j + 1)
+            curr_wonders = wonders[i]
+            for j in range(3):
+                wonder_icon = resource_path("assets/wonders/" + curr_wonders[j] + ".png")
+                wonder_card = WonderCard(curr_wonders[j], wonder_icon)
+                layout.addWidget(wonder_card, i, j + 1)
         button = QPushButton("确定")
         button.clicked.connect(self.ConfirmClicked)
-        layout.addWidget(button, num_players + 1, int(num_civs / 2))
+        layout.addWidget(button, num_players + 1, 1)
         self.setLayout(layout)
-        
 
     def ConfirmClicked(self):
         self.confirmed_signal.emit()
         self.close()
-        

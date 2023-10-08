@@ -10,4 +10,5 @@ def save_to_path(file_path:str, data:dict) -> int:
     # save file as json
     with open(file_path, 'w', encoding='utf8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
-    return 0
+    return 
+
