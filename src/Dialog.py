@@ -1,11 +1,12 @@
 from PyQt6.QtWidgets import QDialog, QGridLayout, QPushButton, QLabel
 from PyQt6.QtGui import QIcon, QFont
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
 from Misc import MY_FONT, resource_path
 
 
 class Dialog(QDialog):
 
+    dialog_confirmed = pyqtSignal()
     def __init__(self):
         super().__init__()
 
@@ -20,7 +21,11 @@ class Dialog(QDialog):
 
         button = QPushButton("确定")
         button.setFont(QFont(MY_FONT, 12))
-        button.clicked.connect(self.close)
+        button.clicked.connect(self.confirmDialog)
         dialog_layout.addWidget(button, 1, 0)
 
         self.setLayout(dialog_layout)
+
+    def confirmDialog(self):
+        self.dialog_confirmed.emit()
+        self.close()

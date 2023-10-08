@@ -16,12 +16,11 @@ from Misc import MY_FONT, resource_path
 
 class MainWindow(QMainWindow):
 
+    num_civs: int = 1
+    num_players: int = 2
     def __init__(self):
         super().__init__()
 
-        # default values
-        self.num_civs = 1
-        self.num_players = 2
         self.civs = Civilizations()
         # Set dark theme background color
         palette = self.palette()
@@ -90,10 +89,10 @@ class MainWindow(QMainWindow):
     def handleChecked(self, checked_name):
         if (checked_name in self.civs.CIV_LIST):
             self.civs.CIV_LIST.remove(checked_name)
-            # print(len(self.civs.CIV_LIST))
+            print(len(self.civs.CIV_LIST))
         else:
             self.civs.CIV_LIST.append(checked_name)
-            # print(len(self.civs.CIV_LIST))
+            print(len(self.civs.CIV_LIST))
 
     def createButtons(self):
         row = 0
@@ -119,6 +118,7 @@ class MainWindow(QMainWindow):
 
     def rollCivs(self):
         print("rolling civs with following params: ")
+        print("civs available: ", len(self.civs.CIV_LIST))
         print("num civs: ", self.num_civs)
         print("num players: ", self.num_players)
         rolled_civs = self.civs.randomize(self.num_players, self.num_civs)
@@ -128,23 +128,26 @@ class MainWindow(QMainWindow):
         self.hide()
         dialog.exec()
 
-        
 
     def handlePlayerNum(self, num):
 
-        
+        print("selected player num: ", num)
         if (num > self.num_players):
             if (num * self.num_civs > len(self.civs.CIV_LIST)):
                 self.list_players.comboBox.setCurrentIndex(self.num_players - 2)
                 dialog = Dialog()
                 dialog.exec()
             else:
-                self.num_players = num
+                self.num_players = num  
+        else: 
+            self.num_players = num
+        print("num players: ", self.num_players)
+        print("num civs: ", self.num_civs)
 
 
     def handleCivNum(self, num):
 
-        
+        print("selected civ num: ", num)
         if (num > self.num_civs):
             if (num * self.num_players > len(self.civs.CIV_LIST)):
                 self.list_civs.comboBox.setCurrentIndex(self.num_civs - 1)
@@ -152,8 +155,10 @@ class MainWindow(QMainWindow):
                 dialog.exec()
             else:
                 self.num_civs = num
-
-
+        else:
+            self.num_civs = num
+        print("num players: ", self.num_players)
+        print("num civs: ", self.num_civs)
 
 
 if __name__ == "__main__":
