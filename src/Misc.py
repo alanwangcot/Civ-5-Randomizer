@@ -12,15 +12,26 @@ def resource_path(relative_path):
 
 # run Misc.py directly from working directory ..
 def gen_build_command():
+
     line = "pyinstaller --onefile --windowed --icon=civ.ico"
-    for root, dirs, files in os.walk("assets"):
+    for root, dirs, files in os.walk("assets/icons"):
         for filename in files:
-            if (filename == "background.png"):
-                continue
-            line += " --add-data \"assets/icons/" + filename + ";assets/icons/\""
-    line += " --add-data \"assets/background/background.png;assets/background/\""
-    line += " src/main.py"
-    with open('build.bat', 'w', encoding='utf8') as f:
+            if sys.platform.startswith('win'):
+                line += " --add-data \"assets/icons/" + filename + ";assets/icons/\""
+            else:
+                line += " --add-data \"assets/icons/" + filename + ":assets/icons/\""
+    for root, dirs, files in os.walk("assets/wonders"):
+        for filename in files:
+            if sys.platform.startswith('win'):
+                line += " --add-data \"assets/wonders/" + filename + ";assets/wonders/\""
+            else:
+                line += " --add-data \"assets/wonders/" + filename + ":assets/wonders/\""
+    if sys.platform.startswith('win'):
+        line += " --add-data \"assets/background/background.png;assets/background/\""
+    else:
+        line += " --add-data \"assets/background/background.png:assets/background/\""
+    line += " src/MainWindow.py"
+    with open('build.txt', 'w', encoding='utf8') as f:
         f.write(line)
 
 

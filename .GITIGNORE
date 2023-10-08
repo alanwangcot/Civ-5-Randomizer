@@ -1,6 +1,7 @@
 .DS_Store
 
 build.bat
+build.txt
 
 venv/
 
@@ -16,4 +17,5 @@ dist/
 
 build/
 
+MainWindow.spec
 main.spec
