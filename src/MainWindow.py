@@ -144,10 +144,10 @@ class MainWindow(QMainWindow):
         self.ban_god_button = SelectionButton("禁/解禁④🈲")
         self.ban_god_button.setFixedSize(100, 50)
         self.ban_god_button.setFont(font)
-        self.ban_god_button.setToolTip("按一次全解禁，再按一次全禁。别连续点太多次不然程序会卡死。")
+        self.ban_god_button.setToolTip("按一次全解禁，再按一次全禁。")
         self.ban_god_button.clicked.connect(self.unbanGod)
         self.ban_second_button = SelectionButton("禁/解禁二级")
-        self.ban_second_button.setToolTip("按一次全解禁，再按一次全禁。别连续点太多次不然程序会卡死。")
+        self.ban_second_button.setToolTip("按一次全解禁，再按一次全禁。")
         self.ban_second_button.setFixedSize(100, 50)
         self.ban_second_button.setFont(font)
         self.ban_second_button.clicked.connect(self.unbanSecond)
@@ -164,23 +164,27 @@ class MainWindow(QMainWindow):
         for i in range(1,5):
             self.checkboxes[i].checkbox.setChecked(True)
         self.ban_god_button.clicked.connect(self.unbanGod)
+        self.ban_god_button.clicked.disconnect(self.banGod)
 
     def unbanGod(self):
         for i in range(1,5):
             self.checkboxes[i].checkbox.setChecked(False)
         self.ban_god_button.clicked.connect(self.banGod)
+        self.ban_god_button.clicked.disconnect(self.unbanGod)
             
     def banSecond(self):
         indexes = [5, 15, 17, 19, 24, 26, 29, 32, 37]
         for i in indexes:
             self.checkboxes[i].checkbox.setChecked(True)
         self.ban_second_button.clicked.connect(self.unbanSecond)
+        self.ban_second_button.clicked.disconnect(self.banSecond)
 
     def unbanSecond(self):
         indexes = [5, 15, 17, 19, 24, 26, 29, 32, 37]
         for i in indexes:
             self.checkboxes[i].checkbox.setChecked(False)
         self.ban_second_button.clicked.connect(self.banSecond)
+        self.ban_second_button.clicked.disconnect(self.unbanSecond)
 
     def unbanAll(self):
         for checkbox in self.checkboxes:

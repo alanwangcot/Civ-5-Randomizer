@@ -2,7 +2,9 @@
 
 基于PyQt6框架实现的GUI版文明5联机随机文明生成器，PvP前摇一摇！
 
-建议频繁重启app避免内存溢出导致的卡死。一键禁用/解禁按钮别点太多次。
+
+### UPDATE
+-   一键禁用/解禁功能已修好，可频繁多次点击，也不会再卡死程序了。
 
 ### FEATURES
 -   支持选择2-10人，每人1-8个文明
@@ -15,7 +17,6 @@
 -   Fix assets used so UI isn't fked up at random places
 
 ### KNOWN BUGS
--   Memory leak when the quick ban/unban buttons are clicked more than twice in a single session, possibly causing the app to hang
 -   Algorithm to randomize wonders has a close to zero but non-zero chance to never return. Shouldn't be a big problem though. If unlucky enough kill the app and reroll.
 -   Layouts are messed up in some places due to me not knowing how to properly align things with PyQt. Also am not a graphic designer so ugly GUI will do.
 
