@@ -1,5 +1,5 @@
 import sys, os
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLabel, QSpacerItem, QVBoxLayout
+from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLabel, QSpacerItem, QVBoxLayout, QCheckBox
 from PyQt6.QtGui import QColor, QPalette, QPixmap, QIcon, QPainter, QFont
 from CivButtonWidget import CivButtonWidget
 from Civilizations import Civilizations
@@ -89,8 +89,21 @@ class MainWindow(QMainWindow):
         # ban_info_label2.setGraphicsEffect(outline_effect2)
 
         self.layout.addWidget(ban_info_label, 4, 5)
-        # self.layout.addWidget(ban_info_label2, 4, 5)
+        # self.layout.addWidget(ban_info_label2, 4, 5)\
 
+
+        self.allow_dup_wonders_button = QCheckBox("允许重复奇观")
+        self.allow_dup_wonders_button.setFont(QFont(MY_FONT, 12))
+        self.allow_dup_wonders_button.setToolTip("允许多个玩家随机到同一个奇观")
+        self.allow_dup_wonders_button.stateChanged.connect(self.wonders.setAllowDup)
+        self.layout.addWidget(self.allow_dup_wonders_button, 5, 4)
+
+
+    def setAllowDup(self, state):
+        if state == Qt.CheckState.Checked:
+            self.wonders.setAllowDup(True)
+        else:
+            self.wonders.setAllowDup(False)
 
     def handleChecked(self, checked_name):
         if (checked_name in self.civs.CIV_LIST):
@@ -126,8 +139,8 @@ class MainWindow(QMainWindow):
     def createSelectionButton(self):
         selection_button = SelectionButton("摇一摇！")
         selection_button.setToolTip("随机生成文明")
-        wonders_button = SelectionButton("随机奇迹")
-        wonders_button.setToolTip("随机生成奇迹，人数最多8人，每人最多一个前期奇迹")
+        wonders_button = SelectionButton("随机奇观")
+        wonders_button.setToolTip("随机生成奇观，人数最多8人，每人最多一个前期奇观")
         selection_button.clicked.connect(self.rollCivs)
         wonders_button.clicked.connect(self.rollWonders)
         self.layout.addWidget(wonders_button, 5, 8)
@@ -192,7 +205,7 @@ class MainWindow(QMainWindow):
 
     def rollWonders(self):
         if (self.num_players > 8):
-            dialog = Dialog("玩家数量过多！(最多8人)！奇迹不够啦！")
+            dialog = Dialog("玩家数量过多！(最多8人)！奇观不够啦！")
             dialog.exec()
             return
         print("rolling wonders with following params: ")
